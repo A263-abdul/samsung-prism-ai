@@ -1,20 +1,23 @@
 
-## Project Overview
+# PROJECT OVERVIEW
 
-This Android application delivers an AI-powered chatbot running the LLAMA language model locally. The system uses a base model and dynamically loaded adapters to provide efficient, personalized conversational experiences. Android OS resources are utilized to run fine-tuning operations when the device is idle or charging. Key features include a modern chat UI, personalized settings for overlay/app targeting, and on-device privacy.
 
-**Unique Aspects**:
+This project is an **AI-powered chatbot application for Android**, designed to combine **privacy, personalization, and efficiency**. Instead of relying on the cloud, it runs the **LLAMA language model directly on-device**, ensuring that all conversations and user data remain private.
 
--   Local-first, privacy-focused LLM inference (no cloud dependency)
+At its core, the system uses a **base model** that is lightweight and optimized for mobile devices. To make the chatbot flexible, it supports **adapters** — small, modular extensions that let the AI quickly switch roles or specialize in certain domains such as _study help, coding assistance, travel planning, or personal wellness_. This adapter-based approach allows the chatbot to adapt instantly without retraining the entire model.
+
+The app also integrates **smart fine-tuning**. Whenever the phone is idle or charging, the system quietly updates active adapters based on the user’s recent interactions. This means the chatbot becomes more **personalized and context-aware over time**, while keeping energy usage and performance optimized
+
+**What makes it special?**
     
--   Adapter-based extensibility for domain and personalization
+-   🧩 **Adapters for flexibility** → switch chatbot roles (study, coding, travel, etc.) instantly.
     
--   Fine-tunes model efficiently when the device is charging/idle, with minimal user intervention
+-   ⚡ **Smart fine-tuning** → improves automatically in the background with zero effort
     
 
 ----------
 
-## `technical-architecture.md`
+# `Technical-architecture`
 
 ## Technical Stack
 
@@ -27,26 +30,59 @@ This Android application delivers an AI-powered chatbot running the LLAMA langua
 | Fine-tuning Framework        | LoRA/QLoRA/Unsloth                          | https://github.com/unslothai/unsloth         |
 | Overlay and Accessibility    | Browser Extensions, Web Workers             | Browser APIs                                 |
 
-## `architecture-overview.md`
+# `Architecture-overview.md`
 
 ## Solution Architecture
+### **1. User Interface Layer**
 
--   The app is structured in modules: UI (chat interface, settings), Service/UI overlay, Model Interaction Layer, Fine-tuning worker.
+-   Provides a modern **chat interface** with personalization options and quick settings.
     
--   Uses Android foreground services to interact with background model processes (Ollama/llama.cpp invoked via JNI or a Termux environment).
+-   Supports **UI overlay mode**, allowing the assistant to integrate seamlessly across applications.
     
--   Adapters for LLM are dynamically selected and loaded.
+-   Ensures a consistent, responsive experience while remaining lightweight.
     
--   A background worker schedules fine-tuning when idle/charging and applies trained adapters automatically.
+
+### **2. Service & Orchestration Layer**
+
+-   Leverages **Android Foreground Services** to maintain persistent interaction with background model processes.
     
--   Communication between Android and model runners is via sockets or local IPC.
+-   Manages task scheduling, lifecycle events, and smooth communication between the UI and fine-tuning modules.
     
--   All sensitive data (user chats/fine-tune data) is kept on-device.
+-   Ensures uninterrupted operation during multitasking and device idle states.
+    
+
+### **3. Model Interaction Layer**
+
+-   Interfaces with optimized LLM backends such as **Ollama** or **llama.cpp** through **JNI bridges** or lightweight containerized runtimes (e.g., Termux).
+    
+-   Dynamically loads and applies **parameter-efficient adapters** (LoRA/PEFT) at runtime without impacting the base model.
+    
+-   Uses **local IPC or socket-based communication** for low-latency message passing between Android components and model runners.
+    
+
+### **4. Fine-Tuning & Adaptation Worker**
+
+-   A **background worker** handles fine-tuning tasks intelligently, triggered only during **idle and charging conditions** to respect battery and thermal limits.
+    
+-   Incorporates a **job scheduler** that can pause, resume, or checkpoint fine-tuning seamlessly.
+    
+-   Automatically integrates newly trained adapters into the active model pipeline once training is complete.
+    
+
+### **5. Data Privacy & Security Layer**
+
+-   All sensitive data—including user conversations and fine-tuning datasets—remains strictly **on-device**, never leaving the user’s control.
+    
+-   Adapters, checkpoints, and personal data are **sandboxed and encrypted**, ensuring security even in offline environments.
+    
+-   Provides **per-user and per-app persona isolation**, enabling customized assistants for different contexts without cross-contamination of data
+
+-   
     
 
 ----------
 
-## `implementation-details.md`
+# implementation-details
 
 1.  **UI Implementation**: Built using Jetpack Compose for chat interface, list-based message rendering, and app overlay using specialized Android system permissions.
     
@@ -61,7 +97,7 @@ This Android application delivers an AI-powered chatbot running the LLAMA langua
 
 ----------
 
-## `installation.md`
+# `Installation`
 
 ## Prerequisites
 
@@ -86,19 +122,38 @@ This Android application delivers an AI-powered chatbot running the LLAMA langua
 
 ----------
 
-## `user-guide.md`
+# `user-guide.md`
 
-## Using the App
+### Using the App
 
--   **Chatting**: Type or speak your query. The app uses the base LLM + current adapter context.
+## Welcome to Your AI Chatbot 
+
+-   When you open the app, you are greeted by a **modern chat interface**.
     
--   **Personalization**: In settings, select which apps allow the chatbot overlay.
-    
--   **Fine-tune Management**: Toggle fine-tuning (when idle/charging), and review or revert adapters in advanced options.
-    
--   **Privacy**: All conversations and adapters remain on device; users can wipe data anytime.
+-   The chatbot runs **entirely on your device** (LLAMA model).
     
 
+##  Start Chatting 💬
+
+-   Type or speak your question.
+    
+-   The chatbot answers instantly.
+   
+   ## Overlay Chat (Anywhere, Anytime) 📱
+
+-   Turn on **Overlay Mode** in settings.
+    
+-   The chatbot floats over other apps.
+## Adapter System 🧩
+
+1.  Adapters are small brain modules that let the chatbot switch between roles (e.g., Study Helper, Coding Buddy, Travel Assistant).
+    
+2.  They auto fine-tune while charging/idle and can be updated, reverted, or deleted anytime
+##  Smart Fine-tuning ⚡
+
+1.  The chatbot automatically fine-tunes active adapters when the device is charging or idle, improving personalization without user effort.
+    
+2.  Users can review, accept, revert, or delete fine-tuned updates anytime for full control.
 ----------
 
 ## `salient-features.md`
