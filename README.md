@@ -2,7 +2,7 @@
 # PROJECT OVERVIEW
 
 
-This project is an **AI-powered chatbot application for Android**, designed to combine **privacy, personalization, and efficiency**. Instead of relying on the cloud, it runs the **LLAMA language model directly on-device**, ensuring that all conversations and user data remain private.
+This project is an **Active AI Powered Android Monitoring Overlay System**, designed to combine **privacy, personalization, and efficiency**. Instead of relying on the cloud, it runs the **LLAMA language model directly on-device**, ensuring that all conversations and user data remain private.
 
 At its core, the system uses a **base model** that is lightweight and optimized for mobile devices. To make the chatbot flexible, it supports **adapters** — small, modular extensions that let the AI quickly switch roles or specialize in certain domains such as _study help, coding assistance, travel planning, or personal wellness_. This adapter-based approach allows the chatbot to adapt instantly without retraining the entire model.
 
